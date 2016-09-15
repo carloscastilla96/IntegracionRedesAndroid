@@ -1,5 +1,6 @@
 package com.example.estudiante.integracionredesandroid;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,14 +30,18 @@ public class MainActivity extends AppCompatActivity {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                String mensaje= "hola";
-                c.enviar(mensaje);
+                User user = new User(nombre.getText().toString(),contraseña.getText().toString());
+                c.enviar(user);
                 System.out.println("----------enviado");
             }
         });
         t.start();
 
 
+    }
+    public void goRegister(){
+        Intent intent = new Intent(this,LoginActivity.class);
+        startActivity(intent);
     }
 
 
