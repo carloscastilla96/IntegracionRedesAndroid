@@ -13,14 +13,14 @@ public class MainActivity extends AppCompatActivity {
 
     EditText nombre;
     EditText contraseña;
-    Conexion c;
+    Conexion c = Conexion.getInstance();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         nombre = (EditText) findViewById(R.id.nombre);
         contraseña = (EditText) findViewById(R.id.contraseña);
-        c = Conexion.getInstance();
+
         System.out.println("borren esto");
 
     }
@@ -34,8 +34,9 @@ public class MainActivity extends AppCompatActivity {
                 // User user = new User(nombre.getText().toString(),contraseña.getText().toString());
                 if (nombre.length() > 0 && contraseña.length() > 0) {
                     Usuario user = new Usuario(nombre.getText().toString(), contraseña.getText().toString());
-                    c.enviar(user);
-                    System.out.println("envie" + user.getNombre());
+                    byte[] serialized= c.serializar(user);
+                    c.sendMessage(serialized);
+
                 } else {
                     runOnUiThread(new Runnable() {
                         @Override
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-                System.out.println("----------enviado");
+
             }
         });
         t.start();

@@ -1,10 +1,12 @@
 package com.example.estudiante.integracionredesandroid;
 
+import java.io.Serializable;
+
 /**
  * Created by 1144090943 on 19/09/2016.
  */
 
-public class Usuario {
+public class Usuario implements Serializable {
 
     private String nombre, contraseña;
 

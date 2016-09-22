@@ -29,7 +29,7 @@ public class Conexion extends Observable implements Runnable {
     private Conexion() {
         port = 5000;
         try {
-            dir = InetAddress.getByName("192.168.113.16");
+            dir = InetAddress.getByName("192.168.1.52");
             socket = new DatagramSocket();
 
             System.out.println("-------------------------- se creó");
@@ -45,26 +45,37 @@ public class Conexion extends Observable implements Runnable {
         return c;
     }
 
-    public void enviar(Object ob){
-
-
-
+    public byte[] serializar(Object o) {
+        byte[] byteArray = null;
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        System.out.println("Serializacion");
         try {
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            ObjectOutputStream obs = new ObjectOutputStream(out);
-            obs.writeObject(ob);
-            obs.flush();
-            obs.close();
-            DatagramPacket packet = new DatagramPacket(out.toByteArray(),out.toByteArray().length,dir,port);
-            socket.send(packet);
+            ObjectOutputStream os = new ObjectOutputStream(bytes);
+            os.writeObject(o);
+            byteArray= bytes.toByteArray();
+            os.flush();
+            os.close();
+            return byteArray;
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-        System.out.println("borren esto");
+        return byteArray;
 
+    }
+
+    public void sendMessage(byte[] data) {
+        DatagramPacket packet = new DatagramPacket(data, data.length, dir, port);
+        try {
+            System.out.println("Sending data to " + dir + ":" + port);
+            socket.send(packet);
+            System.out.println("Data was sent");
+        } catch (IOException e) {
+            // Error sending the packet
+            e.printStackTrace();
+        }
     }
 
     public void recibir() throws IOException, ClassNotFoundException {
