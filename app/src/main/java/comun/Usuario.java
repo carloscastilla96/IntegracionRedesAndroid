@@ -1,4 +1,4 @@
-package com.example.estudiante.integracionredesandroid;
+package comun;
 
 import java.io.Serializable;
 
@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class Usuario implements Serializable {
 
     private String nombre, contraseña;
-
+    private static final long serialVersionUID = 1L;
 
     public Usuario(String nombre, String contraseña) {
 

@@ -29,7 +29,7 @@ public class Conexion extends Observable implements Runnable {
     private Conexion() {
         port = 5000;
         try {
-            dir = InetAddress.getByName("192.168.1.52");
+            dir = InetAddress.getByName("192.168.108.36");
             socket = new DatagramSocket();
 
             System.out.println("-------------------------- se creó");
